@@ -1,45 +1,27 @@
-Flask on OpenShift
-==================
+Please access http://yyc30-yyc30.apps.devcloud.eecs.qmul.ac.uk to see how it works!
 
-This git repository helps you get up and running quickly w/ a Flask installation
-on OpenShift.
+But if you got the following messages...
+
+# Internal Server Error
+
+The server encountered an internal error or misconfiguration and was unable to complete your request.
+
+Please contact the server administrator, root@localhost and inform them of the time the error occurred, and anything you might have done that may have caused the error.
+
+---
+** More information about this error may be available in the server error log.
+Apache/2.2.15 (CentOS) Server at [yyc30-yyc30.apps.devcloud.eecs.qmul.ac.uk](yyc30-yyc30.apps.devcloud.eecs.qmul.ac.uk) Port 80 **
 
 
-Running on OpenShift
-----------------------------
+## Create the application
+```
+rhc app-create -n <domain_name> -a <app_name> -t python-2.7 --from-code https://github.com/amiminoGG/my-first-openshift
+```
+* Notice that `numpy` could not be installed successfully by openshift, you should remotely login to the server and install numpy manually.
 
-Create an account at https://www.openshift.com
-
-### Via Openshift web console
-
-[![Launch on OpenShift](http://launch-shifter.rhcloud.com/launch/light/Click to install.svg)](https://openshift.redhat.com/app/console/application_type/custom?&cartridges[]=python-2.6&initial_git_url=https://github.com/openshift/flask-example.git&name=flask)
-
-### Via rhc & git
-
-Create a python application
-
-    rhc app create flask python-2.6
-
-Add this upstream flask repo
-
-    cd flask
-    git remote add upstream -m master https://github.com/openshift/flask-example.git
-    git pull -s recursive -X theirs upstream master
-    
-Then push the repo upstream
-
-    git push
-
-That's it, you can now checkout your application at:
-
-    http://flask-$yournamespace.rhcloud.com
-
-------------------------------
-
-To get more log messages in your OpenShift logs please add the following line to your code
-
-    app.config['PROPAGATE_EXCEPTIONS'] = True
-
-To read more about logging in Flask please see this email
-
-http://librelist.com/browser//flask/2012/1/27/catching-exceptions-from-flask/
+## Test the application locallly
+```
+cd my-first-openshift/wsgi/
+python run.py
+```
+* Notice that you have to install the required packages before you execute the `run.py`. My suggestion is that install the required packages in virtual environment.
